@@ -31,6 +31,10 @@
 export default {
   data() {
     return {
+      cardno: null,
+      name: null,
+      invoice: null,
+      phone: null,
       tableData: [{
         cardno: '201211111',
         name: '王小虎',
