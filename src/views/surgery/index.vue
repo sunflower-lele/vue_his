@@ -16,7 +16,9 @@
           <div style="margin-left: 20px">
             <el-row :gutter="20">
               <el-col :span="6"> 性别: {{ doctor.data.sex }} </el-col>
-              <el-col :span="6"> 身份证号: {{ doctor.data.identityNo }} </el-col>
+              <el-col :span="6">
+                身份证号: {{ doctor.data.identityNo }}
+              </el-col>
               <el-col :span="6"> 电话号码: {{ doctor.data.telephone }} </el-col>
             </el-row>
           </div>
@@ -93,6 +95,8 @@
 </style>
 
 <script>
+import { getDayInfo } from '@/api/test'
+
 export default {
   data() {
     return {
@@ -140,7 +144,11 @@ export default {
       this.doctor.data.deptName = data.deptName
     },
     stopCollapse() {
-      this.$alert('test')
+      getDayInfo('0000053155').then(response => {
+        const { data } = response
+
+        this.$alert(data)
+      })
     }
   }
 }
