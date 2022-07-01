@@ -10,14 +10,14 @@
                 class="el-icon-user-solid"
                 @click.stop.prevent="doctor.dialog.visible = true"
               />
-              姓名: {{ doctor.name }}
+              姓名: {{ doctor.data.name }}
             </div>
           </template>
           <div style="margin-left: 20px">
             <el-row :gutter="20">
-              <el-col :span="6"> 性别: {{ doctor.sex }} </el-col>
-              <el-col :span="6"> 身份证号: {{ doctor.identityNo }} </el-col>
-              <el-col :span="6"> 电话号码: {{ doctor.telephone }} </el-col>
+              <el-col :span="6"> 性别: {{ doctor.data.sex }} </el-col>
+              <el-col :span="6"> 身份证号: {{ doctor.data.identityNo }} </el-col>
+              <el-col :span="6"> 电话号码: {{ doctor.data.telephone }} </el-col>
             </el-row>
           </div>
         </el-collapse-item>
@@ -54,12 +54,13 @@
         "
         highlight-current-row
         style="width: 100%"
+        @current-change="handleCurrentChange"
       >
         <el-table-column type="index" width="50" />
         <el-table-column property="code" label="工号" width="120" />
         <el-table-column property="name" label="姓名" width="120" />
         <el-table-column property="sex" label="性别" width="120" />
-        <el-table-column property="dept">
+        <el-table-column property="deptName">
           <template slot="header" slot-scope="{}">
             <el-row type="flex" class="text-center">
               <el-col :span="6">
@@ -96,10 +97,15 @@ export default {
   data() {
     return {
       doctor: {
-        name: '覃鹏展',
-        sex: '男',
-        identityNo: 'xxxxxxxxxxxxxx',
-        telephone: 'xxxxxxxxxxx',
+        data: {
+          code: null,
+          name: null,
+          sex: null,
+          identityNo: null,
+          telephone: null,
+          deptCode: null,
+          deptName: null
+        },
         dialog: {
           visible: false,
           filter: '',
@@ -107,7 +113,12 @@ export default {
             code: '000306',
             name: '覃鹏展',
             sex: '男',
-            dept: '信息中心'
+            deptName: '信息中心'
+          }, {
+            code: '008888',
+            name: '刘晓东',
+            sex: '男',
+            deptName: '信息中心'
           }]
         }
       },
@@ -122,6 +133,12 @@ export default {
     }
   },
   methods: {
+    handleCurrentChange(data) {
+      this.doctor.data.code = data.code
+      this.doctor.data.name = data.name
+      this.doctor.data.sex = data.sex
+      this.doctor.data.deptName = data.deptName
+    },
     stopCollapse() {
       this.$alert('test')
     }
