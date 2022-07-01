@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card id="config-card">
+    <el-card id="config-card" class="radio">
       <el-collapse accordion>
         <!-- 医生项 -->
         <el-collapse-item>
@@ -8,7 +8,7 @@
             <div style="margin-left: 20px">
               <i
                 class="el-icon-user-solid"
-                @click.stop.prevent="config.doctorDialogVisible = true"
+                @click.stop.prevent="doctor.dialog.visible = true"
               />
               姓名: {{ doctor.name }}
             </div>
@@ -21,6 +21,7 @@
             </el-row>
           </div>
         </el-collapse-item>
+
         <!-- 科室项 -->
         <el-collapse-item>
           <template slot="title">
@@ -42,27 +43,51 @@
     </el-card>
 
     <!-- 会话 -->
-    <el-dialog title="选择医生" :visible.sync="config.doctorDialogVisible">
+    <el-dialog title="选择医生" :visible.sync="doctor.dialog.visible">
       <el-table
         ref="singleTable"
-        :data="tableData"
+        :data="
+          doctor.dialog.data.filter(
+            (data) =>
+              !doctor.dialog.filter || data.code.includes(doctor.dialog.filter)
+          )
+        "
         highlight-current-row
         style="width: 100%"
       >
         <el-table-column type="index" width="50" />
-        <el-table-column property="date" label="日期" width="120" />
+        <el-table-column property="code" label="工号" width="120" />
         <el-table-column property="name" label="姓名" width="120" />
-        <el-table-column property="address" label="地址" />
+        <el-table-column property="sex" label="性别" width="120" />
+        <el-table-column property="dept">
+          <template slot="header" slot-scope="{}">
+            <el-row type="flex" class="text-center">
+              <el-col :span="6">
+                <div style="text-align: left; margin-top: 2px">科室</div>
+              </el-col>
+              <el-col :span="12" :offset="6">
+                <el-input
+                  v-model="doctor.dialog.filter"
+                  size="mini"
+                  placeholder="输入关键字搜索"
+                />
+              </el-col>
+            </el-row>
+          </template>
+        </el-table-column>
       </el-table>
     </el-dialog>
   </div>
 </template>
 
 <style lang="postcss" scoped>
+.radio {
+  border-radius: 20px;
+}
+
 #config-card {
   margin: 20px;
   border: 2px;
-  border-radius: 20px;
 }
 </style>
 
@@ -74,15 +99,25 @@ export default {
         name: '覃鹏展',
         sex: '男',
         identityNo: 'xxxxxxxxxxxxxx',
-        telephone: 'xxxxxxxxxxx'
+        telephone: 'xxxxxxxxxxx',
+        dialog: {
+          visible: false,
+          filter: '',
+          data: [{
+            code: '000306',
+            name: '覃鹏展',
+            sex: '男',
+            dept: '信息中心'
+          }]
+        }
       },
       dept: {
         name: '信息中心',
-        code: '1000'
-      },
-      config: {
-        doctorDialogVisible: false,
-        deptDialogVisible: false
+        code: '1000',
+        dialog: {
+          visible: false,
+          data: {}
+        }
       }
     }
   },
