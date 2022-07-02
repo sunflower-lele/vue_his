@@ -95,8 +95,6 @@
 </style>
 
 <script>
-import { getDayInfo } from '@/api/test'
-
 export default {
   data() {
     return {
@@ -144,11 +142,6 @@ export default {
       this.doctor.data.deptName = data.deptName
     },
     stopCollapse() {
-      getDayInfo('0000053155').then(response => {
-        const { data } = response
-
-        this.$alert(data)
-      })
     }
   }
 }
