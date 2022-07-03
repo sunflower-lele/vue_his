@@ -5,10 +5,10 @@ const medicalRouter = {
   path: '/medical',
   meta: {
     title: '医务处',
-    icon: 'nested'
+    icon: 'nested',
+    roles: ['medical']
   },
   component: Layout,
-  roles: ['medical'],
   children: [
     {
       path: 'surgery',

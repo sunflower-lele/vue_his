@@ -94,7 +94,8 @@ export const constantRoutes = [
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation', affix: true }
       }
-    ]
+    ],
+    hidden: true
   },
   {
     path: '/guide',
@@ -107,7 +108,8 @@ export const constantRoutes = [
         name: 'Guide',
         meta: { title: 'Guide', icon: 'guide', noCache: true }
       }
-    ]
+    ],
+    hidden: true
   },
   {
     path: '/profile',
@@ -175,6 +177,9 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -198,7 +203,8 @@ export const asyncRoutes = [
     name: 'Example',
     meta: {
       title: 'Example',
-      icon: 'el-icon-s-help'
+      icon: 'el-icon-s-help',
+      roles: ['admin']
     },
     children: [
       {
@@ -226,6 +232,9 @@ export const asyncRoutes = [
   {
     path: '/tab',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -243,7 +252,8 @@ export const asyncRoutes = [
     name: 'ErrorPages',
     meta: {
       title: 'Error Pages',
-      icon: '404'
+      icon: '404',
+      roles: ['admin']
     },
     children: [
       {
@@ -269,7 +279,7 @@ export const asyncRoutes = [
         path: 'log',
         component: () => import('@/views/error-log/index'),
         name: 'ErrorLog',
-        meta: { title: 'Error Log', icon: 'bug' }
+        meta: { title: 'Error Log', icon: 'bug', roles: ['admin'] }
       }
     ]
   },
@@ -281,7 +291,8 @@ export const asyncRoutes = [
     name: 'Excel',
     meta: {
       title: 'Excel',
-      icon: 'excel'
+      icon: 'excel',
+      roles: ['admin']
     },
     children: [
       {
@@ -317,7 +328,7 @@ export const asyncRoutes = [
     redirect: '/zip/download',
     alwaysShow: true,
     name: 'Zip',
-    meta: { title: 'Zip', icon: 'zip' },
+    meta: { title: 'Zip', icon: 'zip', roles: ['admin'] },
     children: [
       {
         path: 'download',
@@ -332,6 +343,9 @@ export const asyncRoutes = [
     path: '/pdf',
     component: Layout,
     redirect: '/pdf/index',
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -350,6 +364,9 @@ export const asyncRoutes = [
   {
     path: '/theme',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -363,6 +380,9 @@ export const asyncRoutes = [
   {
     path: '/clipboard',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',
@@ -376,6 +396,9 @@ export const asyncRoutes = [
   {
     path: 'external-link',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'https://github.com/PanJiaChen/vue-element-admin',
