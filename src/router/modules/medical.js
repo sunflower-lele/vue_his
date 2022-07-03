@@ -8,6 +8,7 @@ const medicalRouter = {
     icon: 'nested'
   },
   component: Layout,
+  roles: ['medical'],
   children: [
     {
       path: 'surgery',
