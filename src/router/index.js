@@ -11,6 +11,7 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import medicalRouter from './modules/medical'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -386,18 +387,7 @@ export const asyncRoutes = [
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true },
 
-  {
-    path: '/surgery/priv',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/surgery/index'),
-        name: '手术授权',
-        meta: { title: '手术授权', icon: 'clipboard' }
-      }
-    ]
-  }
+  medicalRouter
 ]
 
 const createRouter = () => new Router({
