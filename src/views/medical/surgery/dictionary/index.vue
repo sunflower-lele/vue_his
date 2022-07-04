@@ -1,14 +1,18 @@
 <template>
   <el-card class="card">
     <el-table
-      :data="tableData"
+      :data="
+        tableData.filter(
+          (data) =>
+            !search || data.icdCode.toLowerCase().includes(search.toLowerCase())
+        )
+      "
       max-height="750px"
       stripe
-      border
       highlight-current-row
     >
       <el-table-column prop="icdCode" label="ICD-9编码" width="180" sortable />
-      <el-table-column prop="name" label="手术名称" width="540" />
+      <el-table-column prop="name" label="手术名称" width="500" />
       <el-table-column
         prop="level"
         label="手术分级"
@@ -23,6 +27,23 @@
         :filter-method="filterLevel"
       />
       <el-table-column prop="teleprompter" label="提词器" />
+      <el-table-column align="right">
+        <template slot="header" slot-scope="{}">
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+        </template>
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+            Edit
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >
+            Delete
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>
@@ -39,7 +60,8 @@ import { getDictionary } from '@/api/surgery'
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      search: ''
     }
   },
   created() {
@@ -51,6 +73,12 @@ export default {
   methods: {
     filterLevel(value, row) {
       return row.level === value
+    },
+    handleEdit(index, row) {
+      console.log(index, row)
+    },
+    handleDelete(index, row) {
+      console.log(index, row)
     }
   }
 }
