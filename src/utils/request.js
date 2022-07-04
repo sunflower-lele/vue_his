@@ -68,6 +68,10 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
+      // 响应成功后，若响应中含有newToken字段，则刷新token
+      if (res.newToken !== undefined) {
+        store.dispatch('user/setToken', res.newToken)
+      }
       return res
     }
   },

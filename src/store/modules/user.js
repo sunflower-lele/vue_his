@@ -97,6 +97,15 @@ const actions = {
     })
   },
 
+  // set token
+  setToken({ commit }, token) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', token)
+      setToken(token)
+      resolve()
+    })
+  },
+
   // dynamically modify permissions
   async changeRoles({ commit, dispatch }, role) {
     const token = role + '-token'
