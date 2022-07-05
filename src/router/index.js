@@ -222,18 +222,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/tab',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/tab/index'),
-  //       name: 'Tab',
-  //       meta: { title: 'Tab', icon: 'tab' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/tab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tab/index'),
+        name: 'Tab',
+        meta: { title: 'Tab', icon: 'tab' }
+      }
+    ]
+  },
 
   // {
   //   path: '/error',

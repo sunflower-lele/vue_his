@@ -19,8 +19,8 @@
         <el-table-column label="GCP患者" width="100" prop="gcp" />
         <el-table-column align="center" width="360" label="操作" prop="action">
           <template slot-scope="scope">
-            <el-button type="primary" @click="handleAdd(scope.$index, scope.row)">绑定陪护人</el-button>
-            <el-button type="success" @click="peihuVisable = true">查看陪护人</el-button>
+            <el-button type="primary" @click="handleAdd(scope.$index, scope.row)">{{ '绑定陪护人' }}</el-button>
+            <el-button type="success" @click="peihuVisable = true">{{ '查看陪护人' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,7 +44,7 @@
                 <el-input v-model="peihuage" disabled style="width: 260px;" />
               </el-form-item>
             </el-form>
-            <el-button type="primary" style="display:block;margin:0 auto;margin-bottom:20px;" @click="dialogStatus==='create'?createData():updateData()">
+            <el-button type="primary" style="display:block;margin:0 auto;margin-bottom:20px;" @click="logout">
               {{ '注销陪护人' }}
             </el-button>
           </div>
@@ -80,6 +80,7 @@ export default {
       list: [1, 2, 3],
       peihuVisable: false,
       flag: true
+
     }
   },
   methods: {
@@ -96,12 +97,20 @@ export default {
           center: true
         })
       })
+    },
+    logout() {
+      this.$confirm('确认注销陪护人, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '注销成功!'
+        })
+      })
     }
-    /* console.log(index, row); */
   }
-  /* handleSearch(index, row) {
-        console.log(index, row);
-      } */
 }
 </script>
 
