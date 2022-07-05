@@ -1,22 +1,14 @@
 <template>
   <el-card class="card">
     <!-- 数据表 -->
-    <surgery-data-table ref="child" />
+    <surgery-data-table ref="surgeryDataTable" />
     <!-- 按钮 -->
     <div style="margin-top: 10px">
       <el-button icon="el-icon-plus" circle @click="handleAdd" />
       <el-button icon="el-icon-refresh" circle @click="handleRefresh" />
     </div>
     <!-- 会话 -->
-    <el-dialog title="提示" :visible.sync="addDialogVisible" width="30%">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addDialogVisible = false">
-          确 定
-        </el-button>
-      </span>
-    </el-dialog>
+    <add-surgery-dialog ref="addSurgeryDialog" />
   </el-card>
 </template>
 
@@ -28,10 +20,12 @@
 
 <script>
 import SurgeryDataTable from './components/SurgeryDataTable.vue'
+import AddSurgeryDialog from './components/AddSurgeryDialog.vue'
 
 export default {
   components: {
-    SurgeryDataTable
+    SurgeryDataTable,
+    AddSurgeryDialog
   },
   data() {
     return {
@@ -40,10 +34,10 @@ export default {
   },
   methods: {
     handleAdd() {
-      this.addDialogVisible = true
+      this.$refs.addSurgeryDialog.visible = true
     },
     handleRefresh() {
-      this.$refs.child.refreshData().then(() => {
+      this.$refs.surgeryDataTable.refreshData().then(() => {
         this.$message({ message: '刷新成功', center: true, type: 'success' })
       })
     }
