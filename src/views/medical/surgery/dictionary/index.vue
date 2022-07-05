@@ -7,7 +7,7 @@
             !search || data.icdCode.toLowerCase().includes(search.toLowerCase())
         )
       "
-      max-height="750px"
+      max-height="700px"
       stripe
       highlight-current-row
     >
@@ -45,6 +45,11 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 按钮 -->
+    <div style="margin-top: 10px">
+      <el-button icon="el-icon-plus" circle />
+      <el-button icon="el-icon-refresh" circle />
+    </div>
   </el-card>
 </template>
 
