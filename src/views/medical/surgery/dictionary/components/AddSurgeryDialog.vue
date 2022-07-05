@@ -45,7 +45,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" @click="visible = false"> 确 定 </el-button>
+      <el-button type="primary" @click="handleOk"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>
@@ -69,6 +69,12 @@ export default {
     }
   },
   methods: {
+    handleOk() {
+      // 刷新数据表
+      this.$parent.$parent.handleRefresh()
+      // 关闭会话
+      this.visible = false
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
