@@ -1,56 +1,22 @@
 <template>
   <el-card class="card">
     <!-- 数据表 -->
-    <el-table
-      :data="
-        tableData.filter(
-          (data) =>
-            !search || data.icdCode.toLowerCase().includes(search.toLowerCase())
-        )
-      "
-      max-height="700px"
-      stripe
-      highlight-current-row
-    >
-      <el-table-column prop="icdCode" label="ICD-9编码" width="180" sortable />
-      <el-table-column prop="name" label="手术名称" width="500" />
-      <el-table-column
-        prop="level"
-        label="手术分级"
-        width="180"
-        sortable
-        :filters="[
-          { text: '一级', value: '一级' },
-          { text: '二级', value: '二级' },
-          { text: '三级', value: '三级' },
-          { text: '四级', value: '四级' },
-        ]"
-        :filter-method="filterLevel"
-      />
-      <el-table-column prop="teleprompter" label="提词器" />
-      <el-table-column align="right">
-        <template slot="header" slot-scope="{}">
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-        </template>
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
-            Edit
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-          >
-            Delete
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <surgery-data-table ref="child" />
     <!-- 按钮 -->
     <div style="margin-top: 10px">
-      <el-button icon="el-icon-plus" circle />
+      <el-button icon="el-icon-plus" circle @click="handleAdd" />
       <el-button icon="el-icon-refresh" circle @click="handleRefresh" />
     </div>
+    <!-- 会话 -->
+    <el-dialog title="提示" :visible.sync="addDialogVisible" width="30%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">
+          确 定
+        </el-button>
+      </span>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -61,37 +27,25 @@
 </style>
 
 <script>
-import { getDictionary } from '@/api/surgery'
+import SurgeryDataTable from './components/SurgeryDataTable.vue'
 
 export default {
+  components: {
+    SurgeryDataTable
+  },
   data() {
     return {
-      tableData: [],
-      search: ''
+      addDialogVisible: false
     }
   },
-  created() {
-    this.handleRefresh()
-  },
   methods: {
-    filterLevel(value, row) {
-      return row.level === value
-    },
     handleAdd() {
+      this.addDialogVisible = true
     },
     handleRefresh() {
-      getDictionary().then(Response => {
-        const { data } = Response
-        this.tableData = data
-      }).then(() => {
+      this.$refs.child.refreshData().then(() => {
         this.$message({ message: '刷新成功', center: true, type: 'success' })
       })
-    },
-    handleEdit(index, row) {
-      console.log(index, row)
-    },
-    handleDelete(index, row) {
-      console.log(index, row)
     }
   }
 }
