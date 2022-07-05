@@ -1,5 +1,6 @@
 <template>
   <el-card class="card">
+    <!-- 数据表 -->
     <el-table
       :data="
         tableData.filter(
@@ -48,7 +49,7 @@
     <!-- 按钮 -->
     <div style="margin-top: 10px">
       <el-button icon="el-icon-plus" circle />
-      <el-button icon="el-icon-refresh" circle />
+      <el-button icon="el-icon-refresh" circle @click="handleRefresh" />
     </div>
   </el-card>
 </template>
@@ -70,14 +71,21 @@ export default {
     }
   },
   created() {
-    getDictionary().then(Response => {
-      const { data } = Response
-      this.tableData = data
-    })
+    this.handleRefresh()
   },
   methods: {
     filterLevel(value, row) {
       return row.level === value
+    },
+    handleAdd() {
+    },
+    handleRefresh() {
+      getDictionary().then(Response => {
+        const { data } = Response
+        this.tableData = data
+      }).then(() => {
+        this.$message({ message: '刷新成功', center: true, type: 'success' })
+      })
     },
     handleEdit(index, row) {
       console.log(index, row)
