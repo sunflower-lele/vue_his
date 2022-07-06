@@ -9,7 +9,7 @@
         :data="tableData"
         style="width: 100%"
       >
-        <el-table-column label="就诊卡号" prop="cardno" />
+        <el-table-column label="就诊卡号" prop="cardNo" />
         <el-table-column label="姓名" prop="name" />
         <el-table-column label="性别" width="60" prop="sex" />
         <el-table-column label="年龄" width="60" prop="age" />
