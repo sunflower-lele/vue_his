@@ -8,10 +8,38 @@ export function getDictionary() {
   })
 }
 
-export function addDictionary(data) {
+export function addDictionary(icdCode, name, level, teleprompter) {
   return request({
     url: '/api/inpatient/surgery/dictionary/addDictionary',
     method: 'post',
-    data
+    data: {
+      icdCode: icdCode,
+      name: name,
+      level: level,
+      teleprompter: teleprompter
+    }
+  })
+}
+
+export function modifyDictionary(icdCode, name, level, teleprompter) {
+  return request({
+    url: '/api/inpatient/surgery/dictionary/modifyDictionary',
+    method: 'post',
+    data: {
+      icdCode: icdCode,
+      name: name,
+      level: level,
+      teleprompter: teleprompter
+    }
+  })
+}
+
+export function removeDictionary(icdCode) {
+  return request({
+    url: '/api/inpatient/surgery/dictionary/removeDictionary',
+    method: 'post',
+    data: {
+      icdCode: icdCode
+    }
   })
 }

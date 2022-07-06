@@ -32,13 +32,13 @@
         <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
       </template>
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+        <el-button size="mini" @click="handleEdit(scope.row)">
           Edit
         </el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
+          @click="handleDelete(scope.row)"
         >
           Delete
         </el-button>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { getDictionary } from '@/api/surgery'
+import { getDictionary, removeDictionary } from '@/api/surgery'
 
 export default {
   data() {
@@ -70,11 +70,11 @@ export default {
     levelFilterMethod(value, row) {
       return row.level === value
     },
-    handleEdit(index, row) {
-      console.log(index, row)
+    handleEdit(row) {
+      this.$parent.$parent.handleModify(row.icdCode, row.name, row.level, row.teleprompter)
     },
-    handleDelete(index, row) {
-      console.log(index, row)
+    handleDelete(row) {
+      removeDictionary(row.icdCode)
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="添加手术"
+    :title="title"
     :visible.sync="visible"
     :before-close="handleClose"
     width="40%"
@@ -8,7 +8,8 @@
     <el-form ref="form" :model="form">
       <el-form-item label="ICD-9编码" :label-width="formLabelWidth">
         <el-input
-          v-model="form.name"
+          v-model="form.icdCode"
+          placeholder="输入ICD-9编码"
           autocomplete="off"
           class="form-width"
           suffix-icon="el-icon-edit"
@@ -17,6 +18,7 @@
       <el-form-item label="手术名称" :label-width="formLabelWidth">
         <el-input
           v-model="form.name"
+          placeholder="输入手术名称"
           autocomplete="off"
           class="form-width"
           suffix-icon="el-icon-edit"
@@ -24,7 +26,7 @@
       </el-form-item>
       <el-form-item label="手术等级" :label-width="formLabelWidth">
         <el-select
-          v-model="form.region"
+          v-model="form.level"
           placeholder="选择手术等级"
           class="form-width"
         >
@@ -36,7 +38,8 @@
       </el-form-item>
       <el-form-item label="提词器" :label-width="formLabelWidth">
         <el-input
-          v-model="form.name"
+          v-model="form.teleprompter"
+          placeholder="输入提词器"
           autocomplete="off"
           class="form-width"
           suffix-icon="el-icon-edit"
@@ -57,23 +60,53 @@
 </style>
 
 <script>
+import { addDictionary, modifyDictionary } from '@/api/surgery'
+
 export default {
+  props: {
+    type: {
+      type: Number,
+      default: 0,
+      require: true
+    }
+  },
   data() {
     return {
+      title: '',
       visible: false,
       form: {
+        icdCode: '',
         name: '',
-        region: ''
+        level: '',
+        teleprompter: ''
       },
       formLabelWidth: '120px'
     }
   },
+  created() {
+    if (this.type === 0) {
+      this.title = '添加手术'
+    } else if (this.type === 1) {
+      this.title = '修改手术'
+    }
+  },
   methods: {
     handleOk() {
-      // 刷新数据表
-      this.$parent.$parent.handleRefresh()
-      // 关闭会话
-      this.visible = false
+      if (this.type === 0) {
+        addDictionary(this.form.icdCode, this.form.name, this.form.level, this.teleprompter).then(() => {
+          // 刷新数据表
+          this.$parent.$parent.handleRefresh()
+          // 关闭会话
+          this.visible = false
+        })
+      } else if (this.type === 1) {
+        modifyDictionary(this.form.icdCode, this.form.name, this.form.level, this.teleprompter).then(() => {
+          // 刷新数据表
+          this.$parent.$parent.handleRefresh()
+          // 关闭会话
+          this.visible = false
+        })
+      }
     },
     handleClose(done) {
       this.$confirm('确认关闭？')

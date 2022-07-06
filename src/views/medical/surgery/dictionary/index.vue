@@ -8,7 +8,8 @@
       <el-button icon="el-icon-refresh" circle @click="handleRefresh" />
     </div>
     <!-- 会话 -->
-    <add-surgery-dialog ref="addSurgeryDialog" />
+    <add-surgery-dialog ref="addSurgeryDialog" :type="0" />
+    <add-surgery-dialog ref="modifySurgeryDialog" :type="1" />
   </el-card>
 </template>
 
@@ -35,6 +36,13 @@ export default {
   methods: {
     handleAdd() {
       this.$refs.addSurgeryDialog.visible = true
+    },
+    handleModify(icdCode, name, level, teleprompter) {
+      this.$refs.modifySurgeryDialog.visible = true
+      this.$refs.modifySurgeryDialog.form.icdCode = icdCode
+      this.$refs.modifySurgeryDialog.form.name = name
+      this.$refs.modifySurgeryDialog.form.level = level
+      this.$refs.modifySurgeryDialog.form.teleprompter = teleprompter
     },
     handleRefresh() {
       this.$refs.surgeryDataTable.refreshData().then(() => {
