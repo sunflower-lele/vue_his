@@ -32,14 +32,8 @@
         <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
       </template>
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.row)">
-          Edit
-        </el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.row)"
-        >
+        <el-button size="mini" @click="handleEdit(scope.row)"> Edit </el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">
           Delete
         </el-button>
       </template>
@@ -74,7 +68,9 @@ export default {
       this.$parent.$parent.handleModify(row.icdCode, row.name, row.level, row.teleprompter)
     },
     handleDelete(row) {
-      removeDictionary(row.icdCode)
+      removeDictionary(row.icdCode).then(() => {
+        this.refreshData()
+      })
     }
   }
 }

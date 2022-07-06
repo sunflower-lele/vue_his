@@ -30,10 +30,10 @@
           placeholder="选择手术等级"
           class="form-width"
         >
-          <el-option label="一级" value="1" />
-          <el-option label="二级" value="2" />
-          <el-option label="三级" value="3" />
-          <el-option label="四级" value="4" />
+          <el-option label="一级" value="一级" />
+          <el-option label="二级" value="二级" />
+          <el-option label="三级" value="三级" />
+          <el-option label="四级" value="四级" />
         </el-select>
       </el-form-item>
       <el-form-item label="提词器" :label-width="formLabelWidth">
@@ -93,14 +93,14 @@ export default {
   methods: {
     handleOk() {
       if (this.type === 0) {
-        addDictionary(this.form.icdCode, this.form.name, this.form.level, this.teleprompter).then(() => {
+        addDictionary(this.form.icdCode, this.form.name, this.form.level, this.form.teleprompter).then(() => {
           // 刷新数据表
           this.$parent.$parent.handleRefresh()
           // 关闭会话
           this.visible = false
         })
       } else if (this.type === 1) {
-        modifyDictionary(this.form.icdCode, this.form.name, this.form.level, this.teleprompter).then(() => {
+        modifyDictionary(this.form.icdCode, this.form.name, this.form.level, this.form.teleprompter).then(() => {
           // 刷新数据表
           this.$parent.$parent.handleRefresh()
           // 关闭会话
