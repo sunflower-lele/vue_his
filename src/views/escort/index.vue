@@ -3,7 +3,7 @@
     <el-card class="el-card-panel">
       <div class="filter-container">
         <el-input v-model="cardno" placeholder="请输入患者就诊卡号" style="width: 200px;" />
-        <el-button style="margin-left: 10px;" type="primary" icon="el-icon-search">{{ '查询' }}</el-button>
+        <el-button style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="search()">查询</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -19,8 +19,8 @@
         <el-table-column label="GCP患者" width="100" prop="gcp" />
         <el-table-column align="center" width="360" label="操作" prop="action">
           <template slot-scope="scope">
-            <el-button type="primary" @click="handleAdd(scope.$index, scope.row)">{{ '绑定陪护人' }}</el-button>
-            <el-button type="success" @click="peihuVisable = true">{{ '查看陪护人' }}</el-button>
+            <el-button type="primary" @click="handleAdd(scope.$index, scope.row)">绑定陪护人</el-button>
+            <el-button type="success" @click="peihuVisable = true">查看陪护人</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -45,7 +45,7 @@
               </el-form-item>
             </el-form>
             <el-button type="primary" style="display:block;margin:0 auto;margin-bottom:20px;" @click="logout">
-              {{ '注销陪护人' }}
+              注销陪护人
             </el-button>
           </div>
         </div>
@@ -57,6 +57,8 @@
 
 <script>
 // import { MessageBox } from 'element-ui';
+import { escortList } from '@/api/escort'
+
 export default {
   data() {
     return {
@@ -66,24 +68,27 @@ export default {
       peihname: null,
       peihusex: null,
       peihuage: null,
-      tableData: [{
-        cardno: '201211111',
-        name: '王小虎',
-        sex: '男',
-        age: '25',
-        ideno: '1212121212121212',
-        phone: '18617161918',
-        email: '111@qq.com',
-        gcp: '是'
+      tableData: null,
 
-      }],
       list: [1, 2, 3],
       peihuVisable: false,
       flag: true
-
     }
   },
+
+  // 在创建页面时执行方法
+  // created(){
+  //   this.fetchData()
+  // },
+
   methods: {
+    // 获取后端接口数据
+    search() {
+      escortList(this.cardno).then(Response => {
+        const { data } = Response
+        this.tableData = data
+      })
+    },
     handleAdd(index, row) {
       this.$prompt('请输入陪护人卡号', '提示', {
         confirmButtonText: '确定',
