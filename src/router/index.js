@@ -12,6 +12,7 @@ import Layout from '@/layout'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 import medicalRouter from './modules/medical'
+import chargeRouter from './modules/charge'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -377,39 +378,8 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/escort',
-    component: Layout,
-    meta: {
-      roles: ['admin']
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/escort/index'),
-        name: 'escort',
-        meta: { title: '电子陪护', icon: 'dashboard', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/invoice',
-    component: Layout,
-    meta: {
-      roles: ['admin']
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/invoice/index'),
-        name: 'invoice',
-        meta: { title: '电子发票', icon: 'documentation', noCache: true }
-      }
-    ]
-  },
-
   medicalRouter,
+  chargeRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
